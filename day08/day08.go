@@ -51,11 +51,9 @@ func parseInput(input string) *Grid {
 
 func p1(inp *Grid) (sum int) {
 	antinodes := make(Set[Position])
-	printMap := make(map[Position]string)
 
-	for a, freq := range inp.m {
+	for _, freq := range inp.m {
 		for _, a1 := range freq {
-			printMap[a1] = string(a)
 			for _, a2 := range freq {
 				if a1 != a2 {
 					diffX := a1.x - a2.x
@@ -81,12 +79,9 @@ func p1(inp *Grid) (sum int) {
 func p2(inp *Grid) (sum int) {
 	antinodes := make(Set[Position])
 
-	printMap := make(map[Position]string)
-
-	for a, freq := range inp.m {
+	for _, freq := range inp.m {
 		for _, a1 := range freq {
 			antinodes.Add(a1)
-			printMap[a1] = string(a)
 			for _, a2 := range freq {
 				if a1 != a2 {
 					diffX := a1.x - a2.x

@@ -68,8 +68,11 @@ func process(inp string, iter5 int) (length int) {
 		length += count
 	}
 
+<<<<<<< HEAD
 	fmt.Printf("Cache size: %v\n", len(cache))
 
+=======
+>>>>>>> 5de9ee8 (days 1-14)
 	return length
 }
 
