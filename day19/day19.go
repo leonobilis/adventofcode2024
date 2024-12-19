@@ -32,11 +32,7 @@ func parseInput(input string) (Set[string], int, []string) {
 	return patterns, maxLen, strings.Split(s[1], "\n")
 }
 
-func check2(patterns, antipatterns Set[string], cache map[string]int, maxLen int, design string) (count int) {
-	if antipatterns.Contains(design) {
-		return 0
-	}
-
+func check(patterns Set[string], cache map[string]int, maxLen int, design string) (count int) {
 	if c, ok := cache[design]; ok {
 		return c
 	}
@@ -53,25 +49,20 @@ func check2(patterns, antipatterns Set[string], cache map[string]int, maxLen int
 				continue
 			}
 
-			count += check2(patterns, antipatterns, cache, maxLen, design[j:])
+			count += check(patterns, cache, maxLen, design[j:])
 		}
 	}
 
-	if count > 0 {
-		cache[design] = count
-	} else {
-		antipatterns.Add(design)
-	}
+	cache[design] = count
 
 	return
 }
 
 func p1(patterns Set[string], maxLen int, designs []string) (sum int) {
-	antipatterns := make(Set[string])
 	cache := make(map[string]int)
 
 	for _, design := range designs {
-		if check2(patterns, antipatterns, cache, maxLen, design) > 0 {
+		if check(patterns, cache, maxLen, design) > 0 {
 			sum++
 		}
 	}
@@ -79,11 +70,10 @@ func p1(patterns Set[string], maxLen int, designs []string) (sum int) {
 }
 
 func p2(patterns Set[string], maxLen int, designs []string) (sum int) {
-	antipatterns := make(Set[string])
 	cache := make(map[string]int)
 
 	for _, design := range designs {
-		result := check2(patterns, antipatterns, cache, maxLen, design)
+		result := check(patterns, cache, maxLen, design)
 		sum += result
 	}
 	return
